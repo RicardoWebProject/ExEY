@@ -3,6 +3,8 @@ import morgan from 'morgan';
 import cors from 'cors';
 import path from 'path';
 import mongoose from 'mongoose';
+//Rutas
+import router from './routes';
 
 //Conexión a la BD mongo
 mongoose.Promise = global.Promise;
@@ -14,6 +16,7 @@ mongoose.connect(dbUrl, {
 })
 .then(mongoose => console.log('Conectando a la BD en el puerto 27017.'))
 .catch(err => console.log(err))
+//----------------------------------------------------------------------------------------------------------------------------
 
 const app = express();
 app.use(morgan('dev'));
@@ -26,10 +29,16 @@ app.use(express.urlencoded(
 ));
 app.use(express.static(path.join(__dirname, 'public')));
 
+//Uso de las rutas
+app.use('/api', router);
+//----------------------------------------------------------------------------------------------------------------------------
+
 //Puerto asignado o Puerto 3000
 app.set('port', process.env.PORT || 3000);
+//----------------------------------------------------------------------------------------------------------------------------
 
 //Dónde escucha la aplicación principalmente
 app.listen(app.get('port'), () => {
     console.log('Servidor en puerto: ' + app.get('port'));
 });
+//----------------------------------------------------------------------------------------------------------------------------

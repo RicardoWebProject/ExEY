@@ -11,3 +11,5 @@ const personaSchema = new Schema({
 });
 
 const Persona = mongoose.model('persona', personaSchema);
+
+export default Persona;
